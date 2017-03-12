@@ -1,12 +1,17 @@
+# This file creates a chain dictionary from the corpus source files
+# Some support needs to be added to this for variable length keys
+
 import os, glob, pickle
 import markov.MarkovChain as MarkovChain
 
 sources = glob.glob('corpus/*.txt')
 print("{0} corpus articles found for dictionary".format(len(sources)))
 
+# This doesn't do anything yet @TODO: implement
 keys = input("Enter the number of keys to use (default: 2): ")
 keys = keys if keys else 2
 
+# "Terminator" strings
 begin = MarkovChain.MarkovChain.begin
 end   = MarkovChain.MarkovChain.end
 

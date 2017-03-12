@@ -10,5 +10,4 @@ if not chain:
 print("Loaded dictionary '{0}'.".format(dict))
 
 for i in range(20):
-	print(chain.getChain( 40 ))
-	print()
+	print(chain.getChain( 40 ), end="\n\n")
