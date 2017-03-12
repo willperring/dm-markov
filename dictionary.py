@@ -15,7 +15,7 @@ keys = keys if keys else 2
 begin = MarkovChain.MarkovChain.begin
 end   = MarkovChain.MarkovChain.end
 
-chain = MarkovChain.MarkovChain()
+chain = MarkovChain.MarkovChain( int(keys) )
 wordcount   = 0
 sourcecount = 0
 
@@ -25,23 +25,20 @@ for source in sources:
 	sourcetext  = sourcefile.read()
 	sourcewords = sourcetext.split()
 
-	prev1 = begin
-	prev2 = begin
-
 	sourcewords.append( end )
 	sourcecount += 1
 
+	key = (begin,) * int(keys)
+
 	for word in sourcewords:
 
-		key = ( prev2, prev1 )
 		chain.addLink( key, word )
-		prev2 = prev1
-		prev1 = word
+		key = key[1:] + (word,)
 
 		wordcount += 1
 		print("\rReading source {0}, {1} words added".format(sourcecount, wordcount), end='    ')
 	
-print("Scanned {0} souces, {1} words added to dictionary");
+print("\rScanned {0} souces, {1} words added to dictionary".format(sourcecount,wordcount));
 
 dictionary = input("Enter a save name for the dictionary, or blank to exit: ")
 

@@ -24,6 +24,10 @@ class MarkovChain:
 		:param key  Tuple to use as key
 		:param word Word to add to Chain
 		"""
+
+		if len(key) < self.depth:
+			return False
+
 		if key not in self.links:
 			self.links[key] = MarkovLink( word )
 		else:
@@ -40,22 +44,18 @@ class MarkovChain:
 		:param weighted True to use weighted guesses, False for uniform probability
 		"""
 
-		w1 = self.begin
-		w2 = self.begin
-
 		words = []
+		key   = (self.begin,) * self.depth
 
 		while (len(words) < length):
-
-			key = (w1, w2)
 	
 			if key in self.links:
 				word = self.links[key].getWordWeighted() if weighted else self.links[key].getWordUniform()
 				words.append(word)
-				w1 = w2
-				w2 = word
 			else:
 				break
+
+			key = key[1:] + (word,)
 
 		return " ".join( words )
 

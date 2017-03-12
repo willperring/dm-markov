@@ -51,7 +51,7 @@ for url in articleurls:
 		continue
 
 	print("\rCrawling article {0} - {1} / {2}...    "
-		.format(id, crawled+skipped+errors, len(articleurls)), end=' ')
+		.format(id, crawled+skipped+errors, len(articleurls)), end='  ')
 	articlerequest = urllib.request.urlopen( host + url )
 	articlebody    = articlerequest.read().decode('utf-8')
 
