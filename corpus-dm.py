@@ -45,7 +45,7 @@ for url in articleurls:
 		continue
 
 	# Check if we already have a disk entry for this article
-	idglob = glob.glob('corpus/{0}.*'.format(id))
+	idglob = glob.glob('corpus/dailymail/{0}.*'.format(id))
 	if( len(idglob) > 0 ):
 		skipped += 1
 		continue

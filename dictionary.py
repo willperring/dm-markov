@@ -5,7 +5,7 @@ import markov.MarkovChain as MarkovChain
 
 dataset = ""
 while dataset == "":
-	dataset = input("Enter name of dataset to use:")
+	dataset = input("Enter name of dataset to use: ")
 
 sources = glob.glob('corpus/{0}/*.txt'.format(dataset))
 print("{0} corpus articles found for dictionary".format(len(sources)))
