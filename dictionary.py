@@ -2,6 +2,7 @@
 
 import os, glob, pickle
 import markov.MarkovChain as MarkovChain
+from markov.common import inputd
 
 dataset = ""
 while dataset == "":
@@ -10,8 +11,7 @@ while dataset == "":
 sources = glob.glob('corpus/{0}/*.txt'.format(dataset))
 print("{0} corpus articles found for dictionary".format(len(sources)))
 
-keys = input("Enter the number of keys to use (default: 2): ")
-keys = keys if keys else 2
+keys = inputd("Enter the number of keys to use", 2)
 
 # "Terminator" strings
 begin = MarkovChain.MarkovChain.begin

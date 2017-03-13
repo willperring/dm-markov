@@ -101,7 +101,12 @@ class MarkovLink:
 		on how many times the words has occured in the source corpus
 		TODO: implement
 		"""
-		pass
+		weightedlist = []
+
+		for word, count in self.words.items():
+			weightedlist.extend( [word,] * count )
+
+		return random.choice( weightedlist )
 
 	def __str__( self ):
 		return str(self.words)
