@@ -67,7 +67,7 @@ for url in articleurls:
 		errors += 1
 		continue
 
-	filepath = "corpus/{0}".format(id)
+	filepath = "corpus/dailymail/{0}".format(id)
 	lockfile = open(filepath + ".lock", 'w')
 	lockfile.write('Crawling...')
 	lockfile.close()
@@ -85,5 +85,5 @@ for url in articleurls:
 	idlist.append(id)
 	crawled += 1
 
-print("URL Summary: {0} crawled, {1} skipped, {2} errors".format(crawled,skipped,errors))
+print("\rURL Summary: {0} crawled, {1} skipped, {2} errors".format(crawled,skipped,errors))
 
