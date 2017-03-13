@@ -37,10 +37,36 @@ def lookup( chain ):
 
 	print()
 
+def countopts( chain ):
+	counts = {}
+	total  = len(chain.links)
+
+	for key in chain.links:
+		workopts  = len(chain.links[key].words)
+		
+		if workopts > 10:
+			roundopts = workopts - ( workopts%10 ) 
+		else:
+			roundopts = workopts
+
+		if not roundopts in counts:
+			counts[roundopts] = 0
+		counts[roundopts] += 1
+
+	sortedcounts = sorted( counts.items() )
+	sortedcounts.reverse()
+
+	for opts,count in sortedcounts:
+		bracket = str(opts) if opts < 10 else "{0}-{1}".format(opts, opts+9)
+		print("{0:10} options: {1:6} keys ( {2:3}% )".format(bracket, count, (count*100)//total))
+
+	print()
+
 functionmap = {
 	1: stats,
 	2: output,
-	3: lookup
+	3: lookup,
+	4: countopts
 }
 
 cmd = "-"
@@ -50,6 +76,7 @@ while cmd != "":
 	print("1. Dictionary Stats")
 	print("2. Output full dictionary")
 	print("3. Key Lookup")
+	print("4. Option Count")
 	print()
 	print("Or press enter to quit")
 	print()
