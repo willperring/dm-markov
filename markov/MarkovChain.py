@@ -1,4 +1,5 @@
 import pickle, os, random
+from markov.common import normalise
 
 class MarkovChain:
 	"""
@@ -8,14 +9,15 @@ class MarkovChain:
 	begin = "<BEGIN>"
 	end   = "<END>"
 	
-	def __init__( self, depth=2 ):
+	def __init__( self, depth=2, normalise=False ):
 		"""
 		Construct a new Chain
 
 		:param depth Number of words to use as the key
 		"""
-		self.links = {}
-		self.depth = depth
+		self.links     = {}
+		self.depth     = depth
+		self.normalise = normalise
 
 	def addLink( self, key, word ):
 		"""
@@ -36,6 +38,12 @@ class MarkovChain:
 	def dump( self ):
 		return self.links
 
+	def getLink( self, key ):
+		if key in self.links:
+			return self.links[key]
+		else:
+			return None
+
 	def getChain( self, length=25, weighted=False ):
 		"""
 		Compile a Makarov Chain
@@ -50,14 +58,21 @@ class MarkovChain:
 		while (len(words) < length):
 	
 			if key in self.links:
-				word = self.links[key].getWordWeighted() if weighted else self.links[key].getWordUniform()
+				word = self.links[key].getWordWeighted() if weighted else self.links[key].getWordUniform()	
 				words.append(word)
+			
 			else:
 				break
 
-			key = key[1:] + (word,)
+			newkey = normalise(word) if self.normalise else word 
+			key    = key[1:] + (newkey,)
 
 		return " ".join( words )
+
+	def printout( self ):
+		for key in self.links:
+			print(key)
+			print(self.links[key])
 
 
 class MarkovLink:

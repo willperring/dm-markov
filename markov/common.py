@@ -1,3 +1,5 @@
+import re
+
 def inputd( prompt, default ):
 
 	result = input( "{0} (default='{1}'): ".format(prompt, default))
@@ -9,3 +11,6 @@ def inputd( prompt, default ):
 		return False
 
 	return result
+
+def normalise( string ):
+	return re.sub(r'[^A-Za-z0-9 ,.!?]', '', string).lower()

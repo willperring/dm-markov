@@ -2,7 +2,7 @@
 
 import os, glob, pickle
 import markov.MarkovChain as MarkovChain
-from markov.common import inputd
+from markov.common import inputd, normalise
 
 dataset = ""
 while dataset == "":
@@ -12,12 +12,13 @@ sources = glob.glob('corpus/{0}/*.txt'.format(dataset))
 print("{0} corpus articles found for dictionary".format(len(sources)))
 
 keys = inputd("Enter the number of keys to use", 2)
+nmlz = inputd("Normalise keys", "N")
 
 # "Terminator" strings
 begin = MarkovChain.MarkovChain.begin
 end   = MarkovChain.MarkovChain.end
 
-chain = MarkovChain.MarkovChain( int(keys) )
+chain = MarkovChain.MarkovChain( int(keys), nmlz )
 wordcount   = 0
 sourcecount = 0
 
@@ -35,7 +36,9 @@ for source in sources:
 	for word in sourcewords:
 
 		chain.addLink( key, word )
-		key = key[1:] + (word,)
+
+		newkey = normalise(word) if nmlz else word
+		key    = key[1:] + (newkey,)
 
 		wordcount += 1
 		print("\rReading source {0}, {1} words added".format(sourcecount, wordcount), end='    ')
